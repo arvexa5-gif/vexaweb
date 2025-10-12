@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vexa | Ön Kayıt Yönetimi</title>
+    <link rel="icon" type="image/png" href="assets/logo.png?v=2" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div class="max-w-6xl mx-auto p-6">
+        <div id="err" class="hidden mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"></div>
+        <header class="flex items-center justify-between">
+            <h1 class="text-2xl font-extrabold">Ön Kayıtlar</h1>
+            <div class="flex gap-3">
+                <input id="search" placeholder="Ara (ad/e-posta)" class="rounded-lg border px-3 py-2" />
+                <button id="export" class="rounded-lg bg-slate-900 px-4 py-2 text-white hover:bg-slate-800">CSV Dışa Aktar</button>
+            </div>
+        </header>
+        <div class="mt-6 overflow-x-auto rounded-xl border bg-white">
+            <table class="min-w-full text-left text-sm">
+                <thead class="bg-slate-100 text-slate-600">
+                    <tr>
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Ad Soyad</th>
+                        <th class="px-4 py-3">E-posta</th>
+                        <th class="px-4 py-3">Onay</th>
+                        <th class="px-4 py-3">Tarih (UTC)</th>
+                        <th class="px-4 py-3">IP</th>
+                    </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+            <div id="total" class="text-sm text-slate-500"></div>
+            <div class="flex gap-2">
+                <button id="prev" class="rounded border px-3 py-1 disabled:opacity-40">Önceki</button>
+                <button id="next" class="rounded border px-3 py-1 disabled:opacity-40">Sonraki</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let page = 1;
+        const limit = 20;
+        const apiBase = (() => {
+            try {
+                const host = location.hostname || '127.0.0.1';
+                const proto = 'http:'; // local dev
+                return `${proto}//${host}:8000`;
+            } catch { return 'http://127.0.0.1:8000'; }
+        })();
+        const api = (path) => `${apiBase}${path}`;
+
+        async function load() {
+            const q = document.getElementById('search').value.trim();
+            const url = new URL(api('/api/prejoin'));
+            url.searchParams.set('page', page);
+            url.searchParams.set('limit', limit);
+            if (q) url.searchParams.set('q', q);
+            const error = document.getElementById('err');
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                error.classList.add('hidden');
+                error.textContent = '';
+                const tbody = document.getElementById('rows');
+                tbody.innerHTML = '';
+                for (const r of data.items) {
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-t';
+                    tr.innerHTML = `
+                        <td class="px-4 py-2">${r.id}</td>
+                        <td class="px-4 py-2">${r.full_name}</td>
+                        <td class="px-4 py-2">${r.email}</td>
+                        <td class="px-4 py-2">${r.consent ? 'Evet' : 'Hayır'}</td>
+                        <td class="px-4 py-2">${r.created_at}</td>
+                        <td class="px-4 py-2">${r.ip ?? ''}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+                const total = document.getElementById('total');
+                total.textContent = `${data.total} kayıt`;
+                document.getElementById('prev').disabled = page <= 1;
+                const maxPage = Math.ceil(data.total / limit) || 1;
+                document.getElementById('next').disabled = page >= maxPage;
+            } catch (e) {
+                if (error) {
+                    error.textContent = 'Sunucuya bağlanılamadı. API çalışmıyor olabilir.';
+                    error.classList.remove('hidden');
+                }
+            }
+        }
+
+        document.getElementById('search').addEventListener('input', () => { page = 1; load(); });
+        document.getElementById('prev').addEventListener('click', () => { page = Math.max(1, page - 1); load(); });
+        document.getElementById('next').addEventListener('click', () => { page = page + 1; load(); });
+        document.getElementById('export').addEventListener('click', () => {
+            const q = document.getElementById('search').value.trim();
+            const url = new URL(api('/api/prejoin/export.csv'));
+            if (q) url.searchParams.set('q', q);
+            window.open(url.toString(), '_blank');
+        });
+
+        load();
+    </script>
+    
+</body>
+# </html>
+
+

@@ -20,3 +20,4 @@ python3 -m http.server 5173 --bind 127.0.0.1
 
 ## Güvenlik Başlıkları (öneri)
 - `_headers` dosyası ile CSP/HSTS ekleyin (Pages/Netlify).
+# vexaweb

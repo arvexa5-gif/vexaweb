@@ -310,7 +310,7 @@
         };
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = (localStorage.getItem('lang') || '').toLowerCase();
-            // Default to English on first visit; saved preference overrides
+            // Default to English on first visit; if browser is Turkish and no saved pref, keep EN
             window.__vexa_lang = ['tr','en'].includes(savedLang) ? savedLang : 'en';
             applyTranslations(window.__vexa_lang);
             // Language switcher
@@ -632,24 +632,24 @@
                     <div class="max-w-3xl mx-auto space-y-4">
                         <details class="group rounded-xl p-6 border bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 shadow-sm">
                             <summary class="flex cursor-pointer list-none items-center justify-between text-left text-slate-900 font-semibold">
-                                Vexa nedir ve ne yapar?
+                                <span data-i18n="faqQ1">Vexa nedir ve ne yapar?</span>
                                 <span class="material-symbols-outlined text-rose-500 transition-transform group-open:rotate-45">add</span>
                             </summary>
-                            <p class="mt-3 text-slate-600">Vexa, hedeflerinize ulaşmanız için yapay zeka destekli koçluk, akıllı zaman planlama ve ilerleme takibini bir araya getirir.</p>
+                            <p class="mt-3 text-slate-600" data-i18n="faqA1">Vexa, hedeflerinize ulaşmanız için yapay zeka destekli koçluk, akıllı zaman planlama ve ilerleme takibini bir araya getirir.</p>
                         </details>
                         <details class="group rounded-xl p-6 border bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 shadow-sm">
                             <summary class="flex cursor-pointer list-none items-center justify-between text-left text-slate-900 font-semibold">
-                                Uygulama ne kadar kişiselleştirilebilir?
+                                <span data-i18n="faqQ2">Uygulama ne kadar kişiselleştirilebilir?</span>
                                 <span class="material-symbols-outlined text-amber-500 transition-transform group-open:rotate-45">add</span>
                             </summary>
-                            <p class="mt-3 text-slate-600">Hedefleriniz, çalışma stiliniz ve programınıza göre öneriler dinamik olarak uyarlanır.</p>
+                            <p class="mt-3 text-slate-600" data-i18n="faqA2">Hedefleriniz, çalışma stiliniz ve programınıza göre öneriler dinamik olarak uyarlanır.</p>
                         </details>
                         <details class="group rounded-xl p-6 border bg-gradient-to-br from-sky-50 to-sky-100 border-sky-200 shadow-sm">
                             <summary class="flex cursor-pointer list-none items-center justify-between text-left text-slate-900 font-semibold">
-                                Ön kayıt olduktan sonra ne olacak?
+                                <span data-i18n="faqQ3">Ön kayıt olduktan sonra ne olacak?</span>
                                 <span class="material-symbols-outlined text-sky-500 transition-transform group-open:rotate-45">add</span>
                             </summary>
-                            <p class="mt-3 text-slate-600">E-posta adresiniz onay listesine eklenir ve lansman ile ilgili ilk siz bilgilendirilirsiniz.</p>
+                            <p class="mt-3 text-slate-600" data-i18n="faqA3">E-posta adresiniz onay listesine eklenir ve lansman ile ilgili ilk siz bilgilendirilirsiniz.</p>
                         </details>
                     </div>
                 </div>

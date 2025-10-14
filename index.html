@@ -261,6 +261,7 @@
                 followUsTitle: 'Follow Us',
                 followUsDesc: 'Follow us on Instagram for updates.',
                 footerTagline: 'Unleash your potential.',
+                copyright: '© 2025 Vexa. All rights reserved.',
                 prejoinTitle: 'Pre‑Register',
                 prejoinInstruction: 'Join the early access list. Be the first to know about the launch.',
                 fullNameLabel: 'Full Name',
@@ -309,9 +310,8 @@
             });
         };
         document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = (localStorage.getItem('lang') || '').toLowerCase();
-            // Default to English on first visit; if browser is Turkish and no saved pref, keep EN
-            window.__vexa_lang = ['tr','en'].includes(savedLang) ? savedLang : 'en';
+            // Force English by default on every first load (ignores saved until user switches)
+            window.__vexa_lang = 'en';
             applyTranslations(window.__vexa_lang);
             // Language switcher
             const langCurrent = document.getElementById('lang-current');
@@ -688,13 +688,13 @@
                             </svg>
                             <h2 class="text-3xl font-extrabold text-white">Vexa</h2>
                         </a>
-                        <p class="text-slate-400 mt-2">Potansiyelinizi ortaya çıkarın.</p>
-                        <p class="text-sm text-slate-500 mt-4">© 2025 Vexa. Tüm hakları saklıdır.</p>
+                        <p class="text-slate-400 mt-2" data-i18n="footerTagline">Potansiyelinizi ortaya çıkarın.</p>
+                        <p class="text-sm text-slate-500 mt-4" data-i18n="copyright">© 2025 Vexa. Tüm hakları saklıdır.</p>
                     </div>
                     <div class="flex flex-col gap-4">
                         <h3 class="text-lg font-semibold text-white" data-i18n="quickLinks">Hızlı Bağlantılar</h3>
-                        <a href="#features" class="text-base text-slate-400 hover:text-primary-400 transition-colors">Özellikler</a>
-                        <a href="#demo" class="text-base text-slate-400 hover:text-primary-400 transition-colors">Tanıtım</a>
+                        <a href="#features" class="text-base text-slate-400 hover:text-primary-400 transition-colors" data-i18n="featuresLink">Özellikler</a>
+                        <a href="#features" class="text-base text-slate-400 hover:text-primary-400 transition-colors" data-i18n="demoLink">Tanıtım</a>
                         <a href="#" class="text-base text-slate-400 hover:text-primary-400 transition-colors" data-i18n="privacy">Gizlilik Politikası</a>
                         <a href="#" class="text-base text-slate-400 hover:text-primary-400 transition-colors" data-i18n="terms">Kullanım Koşulları</a>
                     </div>

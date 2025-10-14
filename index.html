@@ -188,8 +188,8 @@
                 featuresDesc: 'Vexa\'nın güçlü özellikleri ile kişisel gelişim yolculuğunuzu bir üst seviyeye taşıyın.',
                 feature1Title: 'AI Destekli Koçluk',
                 feature1Desc: 'Yapay zeka koçunuzla sohbet ederek hedefler belirleyin, kişiselleştirilmiş planlar oluşturun ve sürekli motivasyon sağlayın.',
-                feature2Title: 'Akıllı Günlük Planlama',
-                feature2Desc: 'Vexa, gününüzü en verimli şekilde planlar. Görevleri önceliklendirir, zamanı optimize eder ve hedeflerinize ulaşmanızı sağlar.',
+                feature2Title: 'AI Rutin Oluşturucu',
+                feature2Desc: 'Hedeflerinize, enerji seviyenize ve zaman kısıtlarınıza göre yapay zeka her gün kişisel bir rutin oluşturur. Önceliklendirilmiş görevler, odak blokları ve esnek tampon sürelerle gününüz akışkan ama planlı ilerler.',
                 feature3Title: 'Görsel İlerleme Takibi',
                 feature3Desc: 'Gelişiminizi görsel ve anlaşılır grafiklerle takip edin. Haftalık raporlarla ne kadar yol katettiğinizi görün ve motive kalın.',
                 demoTitle: 'Vexa ile Tanışın',
@@ -214,7 +214,20 @@
                 consentLabel: 'Gizlilik politikasını kabul ediyorum.',
                 submitPrejoin: 'Kaydı Tamamla',
                 toastSuccess: 'Ön kayıt alındı! E-postanı kontrol etmeyi unutma.',
-                toastError: 'Kayıt sırasında bir hata oluştu. E-posta zaten kayıtlı olabilir.'
+                toastError: 'Kayıt sırasında bir hata oluştu. E-posta zaten kayıtlı olabilir.',
+                comingSoon: 'Çok Yakında',
+                feature4Title: 'Odak ve Esenlik',
+                feature4Desc: 'Zihinsel esenliği destekleyen pratikler ve mikro molalar ile motivasyonunuzu yüksek tutun.',
+                feature5Title: 'Alışkanlık Oluşturma',
+                feature5Desc: 'Küçük adımlarla istikrarlı alışkanlıklar kurun; kazanımlarınız biriksin.',
+                feature6Title: 'Kişisel Farkındalık',
+                feature6Desc: 'Gün sonu yansımaları ve haftalık özetlerle gelişiminizi görün.',
+                faqQ1: 'Vexa nedir ve ne yapar?',
+                faqA1: 'Vexa, hedeflerinize ulaşmanız için yapay zeka destekli koçluk, akıllı zaman planlama ve ilerleme takibini bir araya getirir.',
+                faqQ2: 'Uygulama ne kadar kişiselleştirilebilir?',
+                faqA2: 'Hedefleriniz, çalışma stiliniz ve programınıza göre öneriler dinamik olarak uyarlanır.',
+                faqQ3: 'Ön kayıt olduktan sonra ne olacak?',
+                faqA3: 'E-posta adresiniz onay listesine eklenir ve lansman ile ilgili ilk siz bilgilendirilirsiniz.'
             },
             en: {
                 homeLink: 'Home',
@@ -229,8 +242,8 @@
                 featuresDesc: 'Take your personal growth journey to the next level with Vexa\'s powerful capabilities.',
                 feature1Title: 'AI‑Powered Coaching',
                 feature1Desc: 'Chat with your AI coach to set goals, create personalized plans, and stay motivated.',
-                feature2Title: 'Smart Daily Planning',
-                feature2Desc: 'Vexa plans your day efficiently, prioritizes tasks, and helps you reach your goals.',
+                feature2Title: 'AI Routine Builder',
+                feature2Desc: 'Based on your goals, energy level and time constraints, AI creates a personalized daily routine. Prioritized tasks, focus blocks and flexible buffers keep your day fluid yet organized.',
                 feature3Title: 'Visual Progress Tracking',
                 feature3Desc: 'Track your growth with clear visuals and weekly reports to stay motivated.',
                 demoTitle: 'Meet Vexa',
@@ -255,7 +268,20 @@
                 consentLabel: 'I accept the privacy policy.',
                 submitPrejoin: 'Complete Registration',
                 toastSuccess: 'Pre‑registration received! Check your email.',
-                toastError: 'An error occurred. Your email may already be registered.'
+                toastError: 'An error occurred. Your email may already be registered.',
+                comingSoon: 'Coming Soon',
+                feature4Title: 'Focus & Well‑being',
+                feature4Desc: 'Keep your motivation high with micro breaks and well‑being practices tailored to your day.',
+                feature5Title: 'Habit Building',
+                feature5Desc: 'Form consistent habits with small steps; let your wins accumulate.',
+                feature6Title: 'Self‑Awareness',
+                feature6Desc: 'Reflect daily and get weekly summaries to see your progress.',
+                faqQ1: 'What is Vexa and what does it do?',
+                faqA1: 'Vexa combines AI coaching, smart time planning and progress tracking to help you reach your goals.',
+                faqQ2: 'How personalized is the app?',
+                faqA2: 'Recommendations adapt to your goals, working style and schedule.',
+                faqQ3: 'What happens after I pre‑register?',
+                faqA3: 'Your email is added to the allowlist and you’ll be notified first about the launch.'
             }
         };
         const detectLang = () => {
@@ -283,8 +309,28 @@
             });
         };
         document.addEventListener('DOMContentLoaded', () => {
-            window.__vexa_lang = detectLang();
+            const savedLang = (localStorage.getItem('lang') || '').toLowerCase();
+            window.__vexa_lang = ['tr','en'].includes(savedLang) ? savedLang : detectLang();
             applyTranslations(window.__vexa_lang);
+            // Language switcher
+            const langCurrent = document.getElementById('lang-current');
+            const langMenu = document.getElementById('lang-menu');
+            const updateLangUI = () => { if (langCurrent) langCurrent.textContent = (window.__vexa_lang || 'tr').toUpperCase(); };
+            updateLangUI();
+            langCurrent?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langMenu?.classList.toggle('hidden');
+            });
+            document.querySelectorAll('[data-lang]')?.forEach(btn => btn.addEventListener('click', (e) => {
+                const lang = e.currentTarget.getAttribute('data-lang');
+                if (!['tr','en'].includes(lang)) return;
+                window.__vexa_lang = lang;
+                try { localStorage.setItem('lang', lang); } catch {}
+                applyTranslations(lang);
+                updateLangUI();
+                langMenu?.classList.add('hidden');
+            }));
+            document.addEventListener('click', () => langMenu?.classList.add('hidden'));
             // Reveal-on-scroll animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -469,7 +515,13 @@
                             <path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z" />
                         </svg>
                     </a>
-                    
+                    <div class="relative">
+                        <button id="lang-current" class="rounded-full border border-slate-300 px-3 py-1 text-sm font-semibold text-slate-700 hover:bg-slate-50">TR</button>
+                        <div id="lang-menu" class="absolute right-0 mt-2 hidden w-28 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+                            <button data-lang="tr" class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50">Türkçe</button>
+                            <button data-lang="en" class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50">English</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -494,7 +546,7 @@
                                 <span data-i18n="heroTagline">Vexa, kişisel hedeflerinize...</span>
                             </p>
                             <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-animate" style="animation-delay: 1.2s;">
-                                <span class="inline-block rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 px-12 py-5 text-xl font-bold text-white shadow-lg shadow-primary-500/30">Çok Yakında</span>
+                                <span class="inline-block rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 px-12 py-5 text-xl font-bold text-white shadow-lg shadow-primary-500/30" data-i18n="comingSoon">Çok Yakında</span>
                             </div>
                         </div>
                     </div>

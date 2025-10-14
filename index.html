@@ -310,8 +310,17 @@
             });
         };
         document.addEventListener('DOMContentLoaded', () => {
-            // Force English by default on every first load (ignores saved until user switches)
-            window.__vexa_lang = 'en';
+            // URL param override (?lang=en|tr)
+            const urlLang = (() => {
+                try { return new URLSearchParams(location.search).get('lang'); } catch { return null; }
+            })();
+            if (['tr','en'].includes(urlLang)) {
+                window.__vexa_lang = urlLang;
+                try { localStorage.setItem('lang', urlLang); } catch {}
+            } else {
+                // Default to English for first load; user switch persists in localStorage
+                window.__vexa_lang = 'en';
+            }
             applyTranslations(window.__vexa_lang);
             // Language switcher
             const langCurrent = document.getElementById('lang-current');

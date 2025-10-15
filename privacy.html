@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy • Vexa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <style> body{font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'} </style>
+</head>
+<body class="bg-gradient-to-b from-white via-primary-50 to-white text-slate-800">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/" class="text-2xl font-extrabold">Vexa</a>
+      <nav class="text-sm">
+        <a href="/" class="text-slate-500 hover:text-primary-500">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-12 max-w-3xl">
+    <h1 class="text-4xl font-extrabold tracking-tight">Privacy Policy</h1>
+    <p class="mt-4 text-slate-600">Last updated: <span id="pp-date"></span></p>
+
+    <section class="mt-10 space-y-6 leading-7">
+      <p>Vexa (“we”, “us”, “our”) respects your privacy. This Privacy Policy explains what information we collect, how we use it, and your choices.</p>
+
+      <h2 class="text-2xl font-bold">Information We Collect</h2>
+      <ul class="list-disc pl-6 text-slate-700">
+        <li>Usage data such as pages visited, device/browser information, and approximate location (via your IP), for analytics and performance.</li>
+        <li>If you contact us, we receive the data you provide (e.g., name, email, message).</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold">How We Use Information</h2>
+      <ul class="list-disc pl-6 text-slate-700">
+        <li>To operate and improve the site’s performance and user experience.</li>
+        <li>To communicate with you (e.g., support, announcements).</li>
+        <li>To maintain security and prevent abuse.</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold">Cookies & Analytics</h2>
+      <p>We may use cookies and similar technologies to remember preferences and analyze traffic. You can manage cookies in your browser settings.</p>
+
+      <h2 class="text-2xl font-bold">Data Sharing</h2>
+      <p>We do not sell your personal information. We may share data with service providers who help us run the site (e.g., hosting, analytics), subject to confidentiality and data protection obligations, or when required by law.</p>
+
+      <h2 class="text-2xl font-bold">Data Retention</h2>
+      <p>We keep information only as long as necessary for the purposes above or as required by law.</p>
+
+      <h2 class="text-2xl font-bold">Your Choices</h2>
+      <ul class="list-disc pl-6 text-slate-700">
+        <li>You can disable cookies in your browser.</li>
+        <li>You can contact us to access, correct, or delete your information as applicable.</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold">Contact</h2>
+      <p>Questions? Email us at <a class="text-primary-600 hover:underline" href="mailto:contact@vexalifeassistant.com">contact@vexalifeassistant.com</a>.</p>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white/70">
+    <div class="container mx-auto px-4 py-8 text-sm text-slate-500">
+      © <span id="pp-year"></span> Vexa. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      try{ document.getElementById('pp-year').textContent = new Date().getFullYear(); }catch(_){ }
+      try{ document.getElementById('pp-date').textContent = new Date().toISOString().slice(0,10); }catch(_){ }
+    })();
+  </script>
+</body>
+</html>
+
+
